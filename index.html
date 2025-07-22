@@ -448,7 +448,7 @@
     <script>
         class Blog {
             constructor() {
-                this.posts = JSON.parse(localStorage.getItem('blogPosts')) || [];
+                this.posts = [];
                 this.postsContainer = document.getElementById('posts');
                 this.homeView = document.getElementById('homeView');
                 this.postView = document.getElementById('postView');
@@ -456,15 +456,26 @@
                 this.init();
             }
 
-            init() {
+            async init() {
+                await this.loadPosts();
                 this.renderPosts();
+            }
+
+            async loadPosts() {
+                try {
+                    const res = await fetch('posts.json');
+                    if (!res.ok) throw new Error('posts.json not found');
+                    this.posts = await res.json();
+                } catch (e) {
+                    this.posts = [];
+                }
             }
 
             renderPosts() {
                 if (this.posts.length === 0) {
                     this.postsContainer.innerHTML = `
                         <div class="empty-state">
-                            <p>No posts yet. Write your first blog post above to get started.</p>
+                            <p>No posts yet. Check back soon!</p>
                         </div>
                     `;
                     return;
