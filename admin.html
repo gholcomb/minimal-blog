@@ -346,6 +346,11 @@
                 <!-- Posts will be listed here -->
             </div>
         </div>
+        <div class="section">
+            <button onclick="blogAdmin.exportPosts()">Export Posts to JSON</button>
+            <input type="file" id="importJson" style="display:none" accept="application/json" onchange="blogAdmin.importPosts(event)">
+            <button onclick="document.getElementById('importJson').click()">Import Posts from JSON</button>
+        </div>
     </div>
 
     <script>
@@ -585,6 +590,41 @@
                 document.getElementById('content').value = draft.content || '';
             }
         });
+
+        BlogAdmin.prototype.exportPosts = function() {
+            const dataStr = JSON.stringify(this.posts, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'posts.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        };
+
+        BlogAdmin.prototype.importPosts = function(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    if (Array.isArray(imported)) {
+                        this.posts = imported;
+                        this.savePosts();
+                        this.renderPostsList();
+                        alert('Posts imported!');
+                    } else {
+                        alert('Invalid JSON format.');
+                    }
+                } catch (err) {
+                    alert('Error parsing JSON.');
+                }
+            };
+            reader.readAsText(file);
+        };
     </script>
 </body>
 </html> 
