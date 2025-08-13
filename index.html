@@ -405,11 +405,91 @@
           padding-left: 1.2em;
           list-style-position: outside;
         }
+
+        /* Table styles */
+        .post-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5em 0;
+            font-size: 0.9em;
+        }
+
+        .post-content th,
+        .post-content td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .post-content th {
+            background-color: #fafafa;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .post-content tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        /* Text centering */
+        .post-content .center {
+            text-align: center;
+        }
+
+        .post-content .center img {
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Greek symbol support */
+        .post-content .greek {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+        }
     </style>
     <!-- Add marked.js for Markdown support -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
-        marked.setOptions({ breaks: true });
+        marked.setOptions({ 
+            breaks: true,
+            gfm: true, // Enable GitHub Flavored Markdown for tables
+            tables: true
+        });
+
+        // Custom renderer for enhanced features
+        const renderer = new marked.Renderer();
+        
+        // Handle Greek symbols with [greek:symbol] syntax
+        renderer.text = function(text) {
+            return text.replace(/\[greek:(\w+)\]/g, (match, symbol) => {
+                const greekMap = {
+                    'alpha': 'α', 'beta': 'β', 'gamma': 'γ', 'delta': 'δ',
+                    'epsilon': 'ε', 'zeta': 'ζ', 'eta': 'η', 'theta': 'θ',
+                    'iota': 'ι', 'kappa': 'κ', 'lambda': 'λ', 'mu': 'μ',
+                    'nu': 'ν', 'xi': 'ξ', 'omicron': 'ο', 'pi': 'π',
+                    'rho': 'ρ', 'sigma': 'σ', 'tau': 'τ', 'upsilon': 'υ',
+                    'phi': 'φ', 'chi': 'χ', 'psi': 'ψ', 'omega': 'ω',
+                    'Alpha': 'Α', 'Beta': 'Β', 'Gamma': 'Γ', 'Delta': 'Δ',
+                    'Epsilon': 'Ε', 'Zeta': 'Ζ', 'Eta': 'Η', 'Theta': 'Θ',
+                    'Iota': 'Ι', 'Kappa': 'Κ', 'Lambda': 'Λ', 'Mu': 'Μ',
+                    'Nu': 'Ν', 'Xi': 'Ξ', 'Omicron': 'Ο', 'Pi': 'Π',
+                    'Rho': 'Ρ', 'Sigma': 'Σ', 'Tau': 'Τ', 'Upsilon': 'Υ',
+                    'Phi': 'Φ', 'Chi': 'Χ', 'Psi': 'Ψ', 'Omega': 'Ω'
+                };
+                return `<span class="greek">${greekMap[symbol] || symbol}</span>`;
+            });
+        };
+
+        // Handle centering with [center]text[/center] syntax
+        renderer.paragraph = function(text) {
+            if (text.startsWith('[center]') && text.endsWith('[/center]')) {
+                const content = text.slice(8, -9); // Remove [center] and [/center]
+                return `<p class="center">${content}</p>`;
+            }
+            return `<p>${text}</p>`;
+        };
+
+        marked.use({ renderer });
     </script>
 </head>
 <body>
@@ -540,7 +620,8 @@
                     }
                     return '';
                 });
-                // Use marked.js to render Markdown
+                
+                // Use marked.js to render Markdown with enhanced features
                 return marked.parse(processed);
             }
         }

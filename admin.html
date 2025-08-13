@@ -271,6 +271,62 @@
           list-style-position: outside;
         }
 
+        /* Styling Toolbar */
+        .styling-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+            padding: 12px 16px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+
+        .toolbar-btn {
+            background: #007AFF;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 36px;
+            height: 36px;
+        }
+
+        .toolbar-btn:hover {
+            background: #0056b3;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .toolbar-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Responsive toolbar */
+        @media (max-width: 768px) {
+            .styling-toolbar {
+                gap: 6px;
+                padding: 10px 12px;
+            }
+            
+            .toolbar-btn {
+                min-width: 32px;
+                height: 32px;
+                font-size: 0.75rem;
+                padding: 6px 8px;
+            }
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 0 20px;
@@ -295,7 +351,11 @@
     <!-- Add marked.js for Markdown support -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
-        marked.setOptions({ breaks: true });
+        marked.setOptions({ 
+            breaks: true,
+            gfm: true, // Enable GitHub Flavored Markdown for tables
+            tables: true
+        });
     </script>
 </head>
 <body>
@@ -320,6 +380,20 @@
                     </div>
                     <div class="form-group">
                         <label for="content">Content</label>
+                        <div class="styling-toolbar">
+                            <button type="button" class="toolbar-btn" onclick="insertText('**', '**')" title="Bold">B</button>
+                            <button type="button" class="toolbar-btn" onclick="insertText('*', '*')" title="Italic">I</button>
+                            <button type="button" class="toolbar-btn" onclick="insertText('`', '`')" title="Code">`</button>
+                            <button type="button" class="toolbar-btn" onclick="insertText('[', '](url)')" title="Link">🔗</button>
+                            <button type="button" class="toolbar-btn" onclick="insertText('![', '](image-url)')" title="Image">🖼️</button>
+                            <button type="button" class="toolbar-btn" onclick="insertTable()" title="Insert Table">📊</button>
+                            <button type="button" class="toolbar-btn" onclick="insertGreek()" title="Greek Symbols">αβγ</button>
+                            <button type="button" class="toolbar-btn" onclick="insertText('[center]', '[/center]')" title="Center Text">⌘</button>
+                            <button type="button" class="toolbar-btn" onclick="insertText('- ', '')" title="Bullet List">•</button>
+                            <button type="button" class="toolbar-btn" onclick="insertText('1. ', '')" title="Numbered List">1.</button>
+                            <button type="button" class="toolbar-btn" onclick="insertText('> ', '')" title="Quote">❝</button>
+                            <button type="button" class="toolbar-btn" onclick="insertText('# ', '')" title="Heading">H</button>
+                        </div>
                         <textarea id="content" name="content" placeholder="Write your thoughts here...&#10;&#10;Markdown supported!&#10;To add an image, use: [image:filename.jpg]" required></textarea>
                     </div>
                     <div class="form-group">
@@ -625,6 +699,37 @@
             };
             reader.readAsText(file);
         };
+
+        // Markdown shortcuts for toolbar buttons
+        function insertText(prefix, suffix) {
+            const cursorPosition = blogAdmin.contentInput.selectionStart;
+            const textBeforeCursor = blogAdmin.contentInput.value.substring(0, cursorPosition);
+            const textAfterCursor = blogAdmin.contentInput.value.substring(cursorPosition);
+            blogAdmin.contentInput.value = textBeforeCursor + prefix + suffix + textAfterCursor;
+            blogAdmin.contentInput.selectionStart = cursorPosition + prefix.length;
+            blogAdmin.contentInput.selectionEnd = cursorPosition + prefix.length;
+            blogAdmin.updatePreview();
+        }
+
+        function insertTable() {
+            const cursorPosition = blogAdmin.contentInput.selectionStart;
+            const textBeforeCursor = blogAdmin.contentInput.value.substring(0, cursorPosition);
+            const textAfterCursor = blogAdmin.contentInput.value.substring(cursorPosition);
+            blogAdmin.contentInput.value = textBeforeCursor + `| Header 1 | Header 2 | Header 3 |\n| --- | --- | --- |\n| Row 1, Col 1 | Row 1, Col 2 | Row 1, Col 3 |\n| Row 2, Col 1 | Row 2, Col 2 | Row 2, Col 3 |\n` + textAfterCursor;
+            blogAdmin.contentInput.selectionStart = cursorPosition + 1; // Adjust for newlines
+            blogAdmin.contentInput.selectionEnd = cursorPosition + 1;
+            blogAdmin.updatePreview();
+        }
+
+        function insertGreek() {
+            const cursorPosition = blogAdmin.contentInput.selectionStart;
+            const textBeforeCursor = blogAdmin.contentInput.value.substring(0, cursorPosition);
+            const textAfterCursor = blogAdmin.contentInput.value.substring(cursorPosition);
+            blogAdmin.contentInput.value = textBeforeCursor + `αβγδεζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ` + textAfterCursor;
+            blogAdmin.contentInput.selectionStart = cursorPosition + 1; // Adjust for newlines
+            blogAdmin.contentInput.selectionEnd = cursorPosition + 1;
+            blogAdmin.updatePreview();
+        }
     </script>
 </body>
 </html> 
