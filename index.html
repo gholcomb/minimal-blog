@@ -408,7 +408,7 @@
 
         /* Table styles */
         .post-content table {
-            width: auto;
+            width: auto !important;
             min-width: 50%;
             max-width: 90%;
             border-collapse: collapse;
@@ -418,6 +418,7 @@
             border-radius: 8px;
             overflow: hidden;
             table-layout: auto;
+            display: inline-block;
         }
 
         .post-content th,
@@ -427,6 +428,9 @@
             border-bottom: 1px solid #e5e5e5;
             vertical-align: top;
             white-space: nowrap;
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .post-content th {
@@ -449,9 +453,10 @@
 
         /* Center tables on the page */
         .post-content table {
-            display: block;
+            display: inline-block;
             margin-left: auto;
             margin-right: auto;
+            text-align: center;
         }
 
         /* Text centering */
