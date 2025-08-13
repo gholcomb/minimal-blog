@@ -271,6 +271,16 @@
           list-style-position: outside;
         }
 
+        /* Center text styling for preview */
+        .markdown-preview .center {
+            text-align: center;
+        }
+
+        .markdown-preview .center img {
+            display: block;
+            margin: 0 auto;
+        }
+
         /* Styling Toolbar */
         .styling-toolbar {
             display: flex;
@@ -622,6 +632,10 @@
                 if (this.currentImage) {
                     content += `\n\n[image:${this.currentImage.name}]`;
                 }
+                
+                // Handle custom [center] tags for preview
+                content = content.replace(/\[center\](.*?)\[\/center\]/g, '<p class="center">$1</p>');
+                
                 content = content.replace(/\[image:(.*?)\]/g, (match, filename) => {
                     if (this.currentImage && this.currentImage.name === filename) {
                         return `![](${this.currentImage.data})`;
