@@ -698,9 +698,6 @@
             updatePreview() {
                 let content = this.contentInput.value;
                 
-                // Handle custom [center] tags for preview - convert to HTML first
-                content = content.replace(/\[center\](.*?)\[\/center\]/g, '<p class="center">$1</p>');
-                
                 // Handle [image:filename] tags
                 if (this.currentImage) {
                     content += `\n\n[image:${this.currentImage.name}]`;
@@ -714,8 +711,14 @@
                     return '';
                 });
                 
-                // Parse Markdown and render
-                this.markdownPreview.innerHTML = marked.parse(content);
+                // Parse Markdown first
+                let htmlContent = marked.parse(content);
+                
+                // Handle custom [center] tags after Markdown parsing
+                htmlContent = htmlContent.replace(/\[center\](.*?)\[\/center\]/g, '<p class="center">$1</p>');
+                
+                // Render the final HTML
+                this.markdownPreview.innerHTML = htmlContent;
             }
         }
 
