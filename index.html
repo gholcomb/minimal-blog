@@ -408,14 +408,16 @@
 
         /* Table styles */
         .post-content table {
-            width: 100%;
+            width: auto;
+            min-width: 50%;
+            max-width: 90%;
             border-collapse: collapse;
             margin: 1.5em auto;
             font-size: 0.9em;
-            max-width: 90%;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             border-radius: 8px;
             overflow: hidden;
+            table-layout: auto;
         }
 
         .post-content th,
@@ -424,6 +426,7 @@
             text-align: left;
             border-bottom: 1px solid #e5e5e5;
             vertical-align: top;
+            white-space: nowrap;
         }
 
         .post-content th {

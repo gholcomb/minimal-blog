@@ -352,14 +352,16 @@
 
         /* Professional table styling for preview */
         .markdown-preview table {
-            width: 100%;
+            width: auto;
+            min-width: 50%;
+            max-width: 90%;
             border-collapse: collapse;
             margin: 1.5em auto;
             font-size: 0.9em;
-            max-width: 90%;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             border-radius: 8px;
             overflow: hidden;
+            table-layout: auto;
         }
 
         .markdown-preview th,
@@ -368,6 +370,7 @@
             text-align: left;
             border-bottom: 1px solid #e5e5e5;
             vertical-align: top;
+            white-space: nowrap;
         }
 
         .markdown-preview th {
@@ -857,7 +860,7 @@
 | --- | --- | --- |
 | Cell 1 | Cell 2 | Cell 3 |
 | Cell 4 | Cell 5 | Cell 6 |` + textAfterCursor;
-            contentInput.selectionStart = cursorPosition + 1; // Adjust for newlines
+            contentInput.selectionStart = cursorPosition + 1;
             contentInput.selectionEnd = cursorPosition + 1;
             blogAdmin.updatePreview();
         }
