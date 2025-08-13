@@ -461,6 +461,27 @@
             margin: 1.5em auto;
         }
 
+        /* Flexible table layout for dynamic columns */
+        .post-content table {
+            table-layout: auto;
+            width: 100%;
+            max-width: 90%;
+        }
+
+        .post-content th,
+        .post-content td {
+            min-width: 120px;
+            word-wrap: break-word;
+            white-space: normal;
+        }
+
+        /* Auto-adjust columns when headers are removed */
+        .post-content table:has(th:only-child) th,
+        .post-content table:has(td:only-child) td {
+            width: 100%;
+            text-align: center;
+        }
+
         /* Text centering */
         .post-content .center {
             text-align: center;
