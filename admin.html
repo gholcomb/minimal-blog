@@ -350,6 +350,51 @@
         .markdown-preview h2 { font-size: 1.3em; }
         .markdown-preview h3 { font-size: 1.1em; }
 
+        /* Professional table styling for preview */
+        .markdown-preview table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5em auto;
+            font-size: 0.9em;
+            max-width: 90%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .markdown-preview th,
+        .markdown-preview td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #e5e5e5;
+            vertical-align: top;
+        }
+
+        .markdown-preview th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #1a1a1a;
+            border-bottom: 2px solid #1a1a1a;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.85em;
+        }
+
+        .markdown-preview tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .markdown-preview tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Center tables in preview */
+        .markdown-preview table {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
         /* Styling Toolbar */
         .styling-toolbar {
             display: flex;
@@ -808,7 +853,10 @@
             const cursorPosition = contentInput.selectionStart;
             const textBeforeCursor = contentInput.value.substring(0, cursorPosition);
             const textAfterCursor = contentInput.value.substring(cursorPosition);
-            contentInput.value = textBeforeCursor + `| Header 1 | Header 2 | Header 3 |\n| --- | --- | --- |\n| Row 1, Col 1 | Row 1, Col 2 | Row 1, Col 3 |\n| Row 2, Col 1 | Row 2, Col 2 | Row 2, Col 3 |\n` + textAfterCursor;
+            contentInput.value = textBeforeCursor + `| Header 1 | Header 2 | Header 3 |
+| --- | --- | --- |
+| Cell 1 | Cell 2 | Cell 3 |
+| Cell 4 | Cell 5 | Cell 6 |` + textAfterCursor;
             contentInput.selectionStart = cursorPosition + 1; // Adjust for newlines
             contentInput.selectionEnd = cursorPosition + 1;
             blogAdmin.updatePreview();
