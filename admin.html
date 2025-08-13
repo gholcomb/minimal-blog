@@ -702,32 +702,35 @@
 
         // Markdown shortcuts for toolbar buttons
         function insertText(prefix, suffix) {
-            const cursorPosition = blogAdmin.contentInput.selectionStart;
-            const textBeforeCursor = blogAdmin.contentInput.value.substring(0, cursorPosition);
-            const textAfterCursor = blogAdmin.contentInput.value.substring(cursorPosition);
-            blogAdmin.contentInput.value = textBeforeCursor + prefix + suffix + textAfterCursor;
-            blogAdmin.contentInput.selectionStart = cursorPosition + prefix.length;
-            blogAdmin.contentInput.selectionEnd = cursorPosition + prefix.length;
+            const contentInput = document.getElementById('content');
+            const cursorPosition = contentInput.selectionStart;
+            const textBeforeCursor = contentInput.value.substring(0, cursorPosition);
+            const textAfterCursor = contentInput.value.substring(cursorPosition);
+            contentInput.value = textBeforeCursor + prefix + suffix + textAfterCursor;
+            contentInput.selectionStart = cursorPosition + prefix.length;
+            contentInput.selectionEnd = cursorPosition + prefix.length;
             blogAdmin.updatePreview();
         }
 
         function insertTable() {
-            const cursorPosition = blogAdmin.contentInput.selectionStart;
-            const textBeforeCursor = blogAdmin.contentInput.value.substring(0, cursorPosition);
-            const textAfterCursor = blogAdmin.contentInput.value.substring(cursorPosition);
-            blogAdmin.contentInput.value = textBeforeCursor + `| Header 1 | Header 2 | Header 3 |\n| --- | --- | --- |\n| Row 1, Col 1 | Row 1, Col 2 | Row 1, Col 3 |\n| Row 2, Col 1 | Row 2, Col 2 | Row 2, Col 3 |\n` + textAfterCursor;
-            blogAdmin.contentInput.selectionStart = cursorPosition + 1; // Adjust for newlines
-            blogAdmin.contentInput.selectionEnd = cursorPosition + 1;
+            const contentInput = document.getElementById('content');
+            const cursorPosition = contentInput.selectionStart;
+            const textBeforeCursor = contentInput.value.substring(0, cursorPosition);
+            const textAfterCursor = contentInput.value.substring(cursorPosition);
+            contentInput.value = textBeforeCursor + `| Header 1 | Header 2 | Header 3 |\n| --- | --- | --- |\n| Row 1, Col 1 | Row 1, Col 2 | Row 1, Col 3 |\n| Row 2, Col 1 | Row 2, Col 2 | Row 2, Col 3 |\n` + textAfterCursor;
+            contentInput.selectionStart = cursorPosition + 1; // Adjust for newlines
+            contentInput.selectionEnd = cursorPosition + 1;
             blogAdmin.updatePreview();
         }
 
         function insertGreek() {
-            const cursorPosition = blogAdmin.contentInput.selectionStart;
-            const textBeforeCursor = blogAdmin.contentInput.value.substring(0, cursorPosition);
-            const textAfterCursor = blogAdmin.contentInput.value.substring(cursorPosition);
-            blogAdmin.contentInput.value = textBeforeCursor + `αβγδεζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ` + textAfterCursor;
-            blogAdmin.contentInput.selectionStart = cursorPosition + 1; // Adjust for newlines
-            blogAdmin.contentInput.selectionEnd = cursorPosition + 1;
+            const contentInput = document.getElementById('content');
+            const cursorPosition = contentInput.selectionStart;
+            const textBeforeCursor = contentInput.value.substring(0, cursorPosition);
+            const textAfterCursor = contentInput.value.substring(cursorPosition);
+            contentInput.value = textBeforeCursor + `αβγδεζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ` + textAfterCursor;
+            contentInput.selectionStart = cursorPosition + 1; // Adjust for newlines
+            contentInput.selectionEnd = cursorPosition + 1;
             blogAdmin.updatePreview();
         }
     </script>
