@@ -356,13 +356,12 @@
             min-width: 50%;
             max-width: 90%;
             border-collapse: collapse;
-            margin: 1.5em auto;
+            margin: 0 auto;
             font-size: 0.9em;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             border-radius: 8px;
             overflow: hidden;
             table-layout: auto;
-            display: inline-block;
         }
 
         .markdown-preview th,
@@ -397,10 +396,13 @@
 
         /* Center tables in preview */
         .markdown-preview table {
-            display: inline-block;
             margin-left: auto;
             margin-right: auto;
-            text-align: center;
+        }
+
+        /* Table wrapper for proper centering and spacing */
+        .markdown-preview table {
+            margin: 1.5em auto;
         }
 
         /* Styling Toolbar */
